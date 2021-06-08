@@ -1,0 +1,21 @@
+﻿@model WebApp_Angular.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+
+@using (Html.BeginForm("MyPostIndex", "Home", FormMethod.Get))
+{
+    <div>
+        UserNamne : @Html.TextBoxFor(m => m.Name)
+    </div>
+    <div>
+        Password : @Html.PasswordFor(m => m.Password)
+    </div>
+
+    <div>
+       <input type="submit" value="Login" />
+    </div>
+}

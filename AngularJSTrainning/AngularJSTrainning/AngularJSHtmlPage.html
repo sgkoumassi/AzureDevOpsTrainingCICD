@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html ng-app="MyModule">
+<head>
+    <meta charset="utf-8" />
+    <title>ANGULAR JS TRAINNING </title>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/AngularScrpt.js"></script>
+    <script src="StringService.js"></script>
+    <link href="Style/StyleSheet.css" rel="stylesheet" />
+</head>
+<body>
+    <div ng-controller="myControler">
+        <h2> two way data binding </h2>
+        <input type="text" ng-model="message" /> <br />
+        {{message}} <br />
+
+        10 + 20 = {{10+20}} <!-- {{}} binding expression -->
+        My name is : {{['Soul','Gani','Koumassi'][2]}} <br />
+
+        <br />
+        <h2> Ng-scr directive </h2>
+        <div>
+            Name :{{country.Name}}
+        </div>
+        <div>
+            Caital : {{country.Capital}}
+        </div>
+        <div>
+            <img ng-src="{{country.flag}}"
+                 alt="{{country.Name + 'Flag'}}"
+                 style="height:100px;width:100px" />
+        </div>
+        <br />
+
+        <h2> Ng-repeat - Filters expressions - ng-hide/show </h2>
+        <div>
+            Rows to display: <input type="number" step="1" min="0" max="5" ng-model="rowLimit" />
+            Search : <input type="text" placeholder="Search employee" ng-model="searchText" />
+            Order By: <select ng-model="sortColumn">
+                <option value="firstName">Name ASC</option>
+                <option value="gender">Gender ASC</option>
+                <option value="dateOfBirth">Date Of Birth ASC</option>
+                <option value="-salary">Salary DESC</option>
+            </select> <br />
+            <input type="checkbox" ng-model="hideSalary" /> Hide Salary
+            <input type="checkbox" ng-model="hideGender" /> Hide Gender
+        </div>
+
+        <br /><br />
+
+        <br /><br />
+        <table>
+            <thead>
+                <tr>
+                    <th ng-click="sortData('firstName')">
+                        FirstName <div ng-class="getSortClass('firstName')"></div>
+                    </th>
+                    <th ng-click="sortData('lastName')">
+                        LastName <div ng-class="getSortClass('lastName')"></div>
+                    </th>
+                    <th ng-click="sortData('dateOfBirth')">
+                        Date Of Birth <div ng-class="getSortClass('dateOfBirth')"></div>
+                    </th>
+                    <th ng-click="sortData('gender')" ng-hide="hideGender">
+                        Gender <div ng-class="getSortClass('gender')"></div>
+                    </th>
+                    <th ng-click="sortData('salary')" ng-hide="hideSalary">
+                        Salary <div ng-class="getSortClass('salary')"></div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="emp in employees |filter:searchText |orderBy:sortColumn:reverseSort">
+                    <td>{{emp.firstName | lowercase}}</td>
+                    <td>{{emp.lastName | uppercase}}</td>
+                    <td>{{emp.dateOfBirth | date:"dd/MM/yyyy"}}</td>
+                    <td ng-hide="hideGender">{{emp.gender | lowercase}}</td>
+                    <td ng-hide="hideSalary">{{emp.salary | currency:"£":1}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <br />
+        <h2> Nested Ng-repeat </h2>
+        <ul>
+            <li ng-repeat="pays in countries">
+                {{pays.name}} - Index {{$index}}
+                <ul>
+                    <li ng-repeat="ville in pays.cities">
+                        {{ville.name}} - Parent Index = {{$parent.$index}} @ Index {{$index}}
+                    </li>
+
+                </ul>
+
+            </li>
+        </ul>
+
+
+        <table>
+            <h2> Ng-click event </h2>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                    <th>Likes/Dislikes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tech in technologies">
+                    <td>{{tech.name}}</td>
+                    <td>{{tech.likes}}</td>
+                    <td>{{tech.dislikes}}</td>
+                    <td>
+                        <input type="button" value="Like" ng-click="incrementLikes(tech)" />
+                        <input type="button" value="Dislike" ng-click="incrementDislikes(tech)" />
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <br />
+
+        <h2> Ng-include directitive : is used to embed an HTML page into another HTML page </h2>
+        Select View :
+        <select ng-model="employeeView">
+            <option value="EmployeeTable.html">Table</option>
+            <option value="EmployeeList.html">List</option>
+        </select>
+        <br /><br />
+        <div ng-include="employeeView">
+        </div>
+
+        <h2> Consuming asp net web service in Angular</h2>
+        <br />
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="empws in employeesWS">
+                    <td>{{empws.Id | uppercase }}</td>
+                    <td>{{empws.Name | uppercase}}</td>
+                    <td>{{empws.Gender | lowercase}}</td>
+                    <td>{{empws.Salary | currency:"$":2}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2> Custom service in Angular</h2>
+        <br />
+        <table>
+            <tr>
+                <td> Your String</td>
+                <td><input type="text" ng-model="input" /> </td>
+            </tr>
+            <tr>
+                <td> Result</td>
+                <td> <input type="text" ng-model="output" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="Process String" ng-click="transformString(input)" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>-->

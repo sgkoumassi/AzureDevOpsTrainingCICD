@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Liste";
+}
+@using GridMvc.Html
+@model IEnumerable<DAL.Personne>
+<h2>Liste</h2>
+
+@Html.Grid(Model).Columns(column =>
+{
+    column.Add(p => p.Nom).Filterable(true);
+    column.Add(p => p.Prenom).Filterable(true); ;
+    column.Add(p => p.Email).Filterable(true); ;
+    column.Add(p => p.Age).Sortable(true);
+})

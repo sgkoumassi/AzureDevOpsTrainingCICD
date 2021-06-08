@@ -1,0 +1,20 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+@*Using the tag helper method and we use a strongly typed View*@
+<form asp-action="Login" asp-controller="Count">
+    <div>
+        UserName : <input type="text" asp-for="UserName" />
+    </div>
+    <div>
+        Password : <input type="password" asp-for="Password" />
+    </div>
+
+    <div>
+       <input value="Login" type="submit" claa="btn btn-primary"/>
+    </div>
+</form>
+

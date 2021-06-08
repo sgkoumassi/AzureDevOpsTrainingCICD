@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml" ng-app="RouteModule">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <base href="/" />
+    <!--This indicate that the layout out of the view in witch
+       will be injected all partial tempplate is presente
+       in the route directory of our application-->
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-route.min.js"></script>
+    <link href="RouteStyleSheet.css" rel="stylesheet" />
+    <script src="angRouting.js"></script>
+
+</head>
+<body>
+    <table style="font-family: Arial">
+        <tr>
+            <td colspan="2" class="header">
+                <h1>
+                    WebSite Header
+                </h1>
+            </td>
+        </tr>
+        <tr>
+            <td class="leftMenu">
+                <a href="RHome">Home</a>
+                <a href="Rcourses">Courses</a>
+                <a href="REmplyeesList">Employees</a>
+            </td>
+            /* Her is place where the partial template will be injected
+            depending on the view*/
+            <td class="mainContent">
+                <ng-view></ng-view>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="footer">
+                <b>Website Footer</b>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

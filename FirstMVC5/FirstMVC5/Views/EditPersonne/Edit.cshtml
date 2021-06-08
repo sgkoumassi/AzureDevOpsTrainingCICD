@@ -1,0 +1,87 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Edit";
+}
+@model FirstMVC5.Models.EditPersonne
+<h2>Edit</h2>
+
+<p>Formulaire brut</p>
+<form action="/EditPersonne/Edit" method="post">
+    Nom:  <input type="text" name="Nom" />
+    Email: <input type="text" name="Email" />
+    Age : <input type="text" name="Age" />
+    <input type="submit" />
+
+</form>
+
+<br /><br /><br />
+
+<p> Formulaire avec Razor et Boostrap</p>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "EditPersonne", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nom</label>
+        <div class=" col-md-10">
+            @Html.TextBoxFor(model => model.Nom, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Email</label>
+        <div class=" col-md-10">
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Age</label>
+        <div class=" col-md-10">
+            @Html.TextBoxFor(model => model.Age, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <input type="submit" class="btn btn-primary col-md-offset-3" />
+    </div>
+
+}
+
+    <br /><br /><br />
+    <p> Formulaire avec Razor et Boostrap avec regles de validation </p>
+
+    @using (Html.BeginForm(actionName: "Edit", controllerName: "EditPersonne", method: FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <label class="col-md-2 control-label">Nom</label>
+            <div class=" col-md-10">
+                @Html.TextBoxFor(model => model.Nom, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nom,"", new { @class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Email</label>
+            <div class=" col-md-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email,"", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Age</label>
+            <div class=" col-md-10">
+                @Html.TextBoxFor(model => model.Age, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <input type="submit" class="btn btn-primary col-md-offset-3" />
+        </div>
+
+    }

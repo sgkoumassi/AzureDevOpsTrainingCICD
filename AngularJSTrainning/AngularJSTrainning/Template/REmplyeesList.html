@@ -1,0 +1,13 @@
+﻿<!-- The list of employees are gong to come from a databasa table -->
+
+<h1>Liste of employees</h1>
+<input type="text" ng-model="employeesCtrl.Name" />
+<button ng-click="employeesCtrl.seachEmployee()">Search</button>
+<ul>
+    <li ng-repeat="emp in employeesCtrl.employees">
+        <a href="REmplyeesList/{{emp.Id}}">
+            {{emp.Name}}
+        </a>
+    </li>
+</ul>
+<button ng-click="employeesCtrl.reloadData()">Reload Data</button>

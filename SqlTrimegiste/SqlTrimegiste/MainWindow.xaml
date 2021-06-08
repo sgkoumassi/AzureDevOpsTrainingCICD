@@ -1,0 +1,100 @@
+﻿<Window x:Class="SqlTrimegiste.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SqlTrimegiste"
+        xmlns:dp="clr-namespace:SqlTrimegiste.UserControls"
+        xmlns:clr="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <clr:String x:Key="str">Hello</clr:String>
+    </Window.Resources>
+
+    <Grid x:Name="maGrille">
+        <Grid.Resources>
+            <ControlTemplate x:Key="RoundButtonTemplate">
+                <Grid>
+                    <Ellipse Width="40" Height="40" Name="ButtonBorder" Fill="OrangeRed" />
+                    <Ellipse Width="30" Height="30" Fill="Orange" />
+                </Grid>
+            </ControlTemplate>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="3">
+            <TextBlock >Bonjour les Grid</TextBlock>
+            <ListBox PreviewMouseLeftButtonDown="UIElement_Click" local:MainWindow.NewName="Boomm">
+                <ListBox.Items>
+                    <ListBoxItem>Oui</ListBoxItem>
+                    <ListBoxItem>Non</ListBoxItem>
+                    <ListBoxItem>Peut etre</ListBoxItem>
+                    <ListBoxItem>Why not</ListBoxItem>
+                </ListBox.Items>
+            </ListBox>
+        </StackPanel>
+        <TabControl Grid.Row="0" Grid.Column="0" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Left">
+            <TabItem Header="Tab 1">xyz</TabItem>
+            <TabItem Header="Tab 2">abc</TabItem>
+        </TabControl>
+        <Button Content="Attached Property" Grid.Row="0" Grid.Column="2" 
+                VerticalAlignment="Top" HorizontalAlignment="Center"
+                Click="UIElement_Click" 
+                local:MainWindow.NewName="APWork" Margin="211,-1,5,0"></Button>
+        <!-- Dependency property -->
+        <!-- <dp:DpControl SetText="This is my dependency text" Grid.Row="0" Grid.Column="2" 
+               Height="24" Margin="221,161,162,164" 
+                      ></dp:DpControl> -->
+        <!-- Original Rectangle -->
+        <Rectangle Width="150" Height="10" Fill="Yellow" Grid.Row="0" Grid.Column="2" />
+        <!-- Rectangle with 45 degrees rotation -->
+        <Rectangle Width="150" Height="10" Fill="Blue" Opacity="0.5" Grid.Row="0" Grid.Column="2">
+            <Rectangle.RenderTransform>
+                <RotateTransform CenterX="0" CenterY="0" Angle="45" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Button Content="OK" Grid.Row="0" Grid.Column="0" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center"
+            Template="{StaticResource RoundButtonTemplate}" RenderTransformOrigin="0.075,-2.85" Margin="140,5,214,304" ></Button>
+        <Button Content="Valider" Grid.Row="1" Grid.Column="0" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center"></Button>
+        <Button Content="Annuler" Grid.Row="1" Grid.Column="2"  
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center"></Button>
+        <GridSplitter Grid.Row="1" Grid.Column="1" Width="5"
+                      HorizontalAlignment="Stretch" ResizeDirection="Columns"></GridSplitter>
+        <!--<TextBox HorizontalAlignment="Left" Height="24" Margin="730,385,0,0" TextWrapping="Wrap" Text="Valider" VerticalAlignment="Top" Width="52"/>
+        <Button x:Name ="button" Content="{StaticResource str}" HorizontalAlignment="Left" Height="25" Margin="620,385,0,0" VerticalAlignment="Top" Width="70"/>-->
+    </Grid>
+    <!--<Canvas x:Name="monCanevas">
+        <Button x:Name ="button" Content="Helle Canevas" Canvas.Left="325" Canvas.Top="160" />
+    </Canvas>-->
+    <!--<DockPanel x:Name="momDockPanel">
+        <Button Content="Helle DockPanel" DockPanel.Dock="Top"></Button>
+        <Button Content="Helle DockPanel" DockPanel.Dock="Left"></Button>
+        <Button Content="Helle DockPanel" DockPanel.Dock="Right"></Button>
+        <Button Content="Helle DockPanel" DockPanel.Dock="Bottom"></Button>
+        <Button Content="Helle DockPanel"></Button>
+    </DockPanel>-->
+
+    <!--<StackPanel x:Name="momStackPanel">
+        <Button Content="Helle StackPanel" HorizontalAlignment="Left"></Button>
+        <Button Content="Helle StackPanel" HorizontalAlignment="Right"></Button>
+        <Button Content="Helle StackPanel" HorizontalAlignment="Center"></Button>
+        <Button Content="Helle StackPanel"></Button>
+    </StackPanel>-->
+</Window>

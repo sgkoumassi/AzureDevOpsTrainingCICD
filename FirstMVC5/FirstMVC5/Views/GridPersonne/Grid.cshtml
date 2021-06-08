@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Grid";
+}
+@using GridMvc.Html
+
+@model IEnumerable<FirstMVC5.Models.GridPersonne>
+<h2>Grid</h2>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(p => p.Nom).Filterable(true);
+    columns.Add(p => p.Age).Sortable(true);
+    columns.Add(p => p.Email).Filterable(true);
+}
+             ).WithPaging(5)

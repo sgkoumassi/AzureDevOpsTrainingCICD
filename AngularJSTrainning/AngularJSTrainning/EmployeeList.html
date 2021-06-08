@@ -1,0 +1,17 @@
+﻿//The list of employees are gong to come from a databasa table
+<ul ng-repeat="emp in employees">
+    <li>
+        {{emp.firstName  | uppercase}}
+        <ul>
+            <li>
+                {{emp.dateOfBirth | date:"dd/MM/yyyy"}}
+            </li>
+            <li>
+                {{emp.gender | lowercase}}
+            </li>
+            <li>
+                {{emp.salary | currency:"£":1}}
+            </li>
+        </ul>
+    </li>
+</ul>

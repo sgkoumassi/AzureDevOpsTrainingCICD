@@ -1,0 +1,40 @@
+﻿
+blockquote {
+    border: solid thick rgb(35, 143, 190);
+    border-radius: 1em ;
+    box-shadow: black 0.4em 0.4em 0.3em
+}
+
+#selectElement {
+    border: solid thick rgb(23, 206, 126);
+    border-radius: 1em;
+    box-shadow: black 0.4em 0.4em 0.3em
+}
+
+tr:hover
+{
+    background-color :bisque;
+    color :forestgreen;
+    cursor :pointer;
+}
+
+input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    background-image: url(../../fonts/searchicon.png);
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    margin-top: 10px;
+}
+
+/* When the input field gets focus, change its width to 100% */
+input[type=text]:focus {
+    width: 100%;
+}

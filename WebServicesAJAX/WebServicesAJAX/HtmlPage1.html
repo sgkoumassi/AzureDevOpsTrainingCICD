@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="Script/jquery-1.11.2.js"></script>
+    <script src="Script/jquery-ui.js"></script>
+    <link href="Script/jquery-ui.css" rel="stylesheet" />
+
+    <!--<script src="Script/jquery-1.11.2.min.js"></script>-->
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Comsume asp.net web service using xlm data
+            /*
+            $('#btnGetEmplyee').click(function () {
+                var empId = $('#txtId').val();
+                $.ajax({
+
+                    url: 'EmployeeService.asmx/GetEmployeeById',
+                    data: { Id: empId },
+                    method: 'post',
+                    dataType: 'xml',
+                    success: function (data) {
+                        var jqueryXml = $(data);
+                        $('#txtName').val(jqueryXml.find('Name').text());
+                        $('#txtGender').val(jqueryXml.find('Gender').text());
+                        $('#txtSalary').val(jqueryXml.find('Salary').text());
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+
+            });*/
+
+            // Comsume asp.net web service using json  data
+            $('#btnGetEmplyee').click(function () {
+                var empId = $('#txtId').val();
+                $.ajax({
+                    url: 'EmployeeService.asmx/GetEmployeeById',
+                    contentType: 'application/json;charset=utf-8',// mean the type of data sent to the server is json string
+                    data: JSON.stringify({ Id: empId }), // so we use jason wtringify methode to convert the js object to json object
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        // since the data  is converted to Json object
+                        // it will have the property "d" attache to that
+                        $('#txtName').val(data.d.Name);
+                        $('#txtGender').val(data.d.Gender);
+                        $('#txtSalary').val(data.d.Salary);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+
+            });
+            // If the web service return a json data, so we don't the contentType property as to stringify the data
+            /*
+            $('#btnGetEmplyee').click(function () {
+                var empId = $('#txtId').val();
+                $.ajax({
+                    url: 'EmployeeService.asmx/GetEmployeeById',
+
+                    data: { Id: empId }, //no need stringif y data, the no "d" property also
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        // the json object return by the web service will no longer have the property "d" attache to that
+                        $('#txtName').val(data.Name);
+                        $('#txtGender').val(data.Gender);
+                        $('#txtSalary').val(data.Salary);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+
+            });*/
+
+
+            // retrieve all employees using the employees methode that return json object
+            $('#btnGetEmplyees').click(function () {
+
+                $.ajax({
+                    url: 'EmployeeService.asmx/GetEmployees',
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        var employeeTable = $('#tbEmployees tbody');
+                        employeeTable.empty();
+                        $(data).each(function (index, emp) {
+                            employeeTable.append('<tr><td>' +
+                                emp.Id + '</td><td>' +
+                                emp.Name + '</td><td>' +
+                                emp.Gender + '</td><td>' +
+                                emp.Salary + '</td></tr>');
+
+                        });
+
+                        $('#txtName').val(data.Name);
+                        $('#txtGender').val(data.Gender);
+                        $('#txtSalary').val(data.Salary);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+
+            });
+
+            // Insert and employee in the database
+            // Check if the Inserted Name exist or not and suggest an available User Name
+            $('#txtNameI').keyup(function () {
+                var currentUserName = $(this).val();
+                if (currentUserName.length >= 3) {
+                    $.ajax({
+                        url: 'EmployeeService.asmx/GetAvailableUserName',
+                        method: 'post',
+                        data: { availableUserName: currentUserName },
+                        dataType: 'json',
+                        success: function (data) {
+                            var divMessage = $('#divOutput');
+                            var spanElement = $('#spanAvailableUserName');
+                            var linkElement = $('#linkAvailableUsername');
+                            if (data.UserNameInUse) {
+                                divMessage.text(currentUserName + ' is already in use. Try another ?');
+                                divMessage.css('color', 'red');
+                                spanElement.text('Available');
+                                linkElement.text(data.UserName).click(function () {
+                                    $('#txtNameI').val($(this).text());
+                                    divMessage.text('');
+                                    spanElement.text('');
+                                    linkElement.text('');
+                                });
+                            }
+                            else {
+                                divMessage.text(data.UserName + ' is available');
+                                divMessage.css('color', 'green');
+                                spanElement.text('');
+                                linkElement.text('');
+                            }
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+
+
+                    });
+                }
+
+
+            });
+
+            $('#txtNameI').keydown(function () {
+                var currentUserName = $(this).val();
+                $('#divOutput').html('');
+
+            });
+
+            $('#btnAddEmployee').click(function () {
+                var employee = {};
+                employee.Name = $('#txtNameI').val();
+                employee.Gender = $('#txtGenderI').val();
+                employee.Salary = $('#txtSalaryI').val();
+                $.ajax({
+                    url: 'EmployeeService.asmx/AddEmployees',
+                    method: 'post',
+                    contentType: 'application/json;charset=utf-8',
+                    data: '{emp:' + JSON.stringify(employee) + '}',
+                    success: function (data) {
+                        getAllEmployees();
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+            function getAllEmployees() {
+                $.ajax({
+                    url: 'EmployeeService.asmx/GetEmployees',
+                    method: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        var employeeTable = $('#tbEmployees tbody');
+                        employeeTable.empty();
+                        $(data).each(function (index, emp) {
+                            employeeTable.append('<tr><td>' +
+                                emp.Id + '</td><td>' +
+                                emp.Name + '</td><td>' +
+                                emp.Gender + '</td><td>' +
+                                emp.Salary + '</td></tr>');
+
+                        });
+
+                        $('#txtName').val(data.Name);
+                        $('#txtGender').val(data.Gender);
+                        $('#txtSalary').val(data.Salary);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+
+            }
+
+            // The data will be loaded on demand as you scroll down th page
+            var currentPageNumber = 1;
+            LoadEmployeesSrb(currentPageNumber);
+            $(window).scroll(function () {
+                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                    currentPageNumber += 1;
+                    LoadEmployeesSrb(currentPageNumber);
+                }
+            });
+
+            function LoadEmployeesSrb(currentPage) {
+                $.ajax({
+                    url: 'EmployeeService.asmx/LoadEmployeesWithScrBar',
+                    method: 'post',
+                    data: { pageNumber: currentPage, pageSize: 30 },
+                    dataType: 'json',
+                    success: function (data) {
+
+                        var employeeTable = $('#tbEmployeesScr tbody');
+                        $(data).each(function (index, emp) {
+                            employeeTable.append('<tr><td>' +
+                                emp.Id + '</td><td>' +
+                                emp.Name + '</td><td>' +
+                                emp.Gender + '</td><td>' +
+                                emp.Salary + '</td></tr>');
+                        });
+
+                        $('#txtName').val(data.Name);
+                        $('#txtGender').val(data.Gender);
+                        $('#txtSalary').val(data.Salary);
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+
+            }
+
+            //  Calling live json web service using jquery ajax
+
+            $('#btnGetWeather').click(function () {
+
+                var resquestData = $('#txtCity').val() + ',' + $('#txtCountry').val();
+                var resultEelement = $('#resultDiv');
+
+                $.ajax({
+                    url: 'http://api.openweathermap.org/data/2.5/weather',
+                    method: 'get',
+                    data: { q: resquestData },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.message != null) {
+                            resultEelement.html(response.message);
+                        }
+                        else {
+                            resultEelement.html('Weather: ' + response.weather[0].main + '<br/>'
+                                + 'Description: ' + response.weather[0].description);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+
+
+            // Autocomplete textbox using jquery in asp net
+
+            $('#txtName').autocomplete({
+                source: 'StudentHandler.ashx'
+            });
+
+
+        });
+    </script>
+</head>
+<body style="font-family:Arial">
+   
+    <h2> Calling live json web service using jquery ajax </h2>
+    <table border="1" style="border-collapse:collapse">
+        <tr>
+            <td>City</td>
+            <td> <input id="txtCity" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Country</td>
+            <td> <input id="txtCountry" type="text" /></td>
+        </tr>
+    </table>
+    <input type="button" id="btnGetWeather" value="Get Weather Data" />
+    <br />
+    <div id="resultDiv"></div>
+    <br />   <br />
+    <h2>The data will be loaded on demand as you scroll down th page </h2>
+    <br />   <br />
+    <table id="tbEmployeesScr" border="1" style="border-collapse:collapse">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br />   <br />
+    <h2>The table that insert an Employee</h2>
+    <table border="1" style="border-collapse:collapse">
+        <tr>
+            <td>Name</td>
+            <td> <input id="txtNameI" type="text" /></td>
+            <td>
+                <div id="divOutput"></div>
+                <span id="spanAvailableUserName"></span>
+                <a id="linkAvailableUsername" href="#"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td> <input id="txtGenderI" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Salary</td>
+            <td> <input id="txtSalaryI" type="text" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="btnAddEmployee" value="Add Employee" />
+            </td>
+        </tr>
+    </table>
+    <br />   <br />
+    <h2>The table that Retrieve the Employee by Id</h2>
+    ID : <input id="txtId" type="text" style="width:100px" />
+    <input type="button" id="btnGetEmplyee" value="Get Employee" />
+    <br />   <br />
+    <table border="1" style="border-collapse:collapse">
+        <tr>
+            <td>Name</td>
+            <td> <input id="txtName" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td> <input id="txtGender" type="text" /></td>
+        </tr>
+        <tr>
+            <td>Salary</td>
+            <td> <input id="txtSalary" type="text" /></td>
+        </tr>
+    </table>
+
+    <br /> <br /> <br />
+    <h2>The table that Retrieve All the Employees</h2>
+    <input type="button" id="btnGetEmplyees" value="Get All Employee" />
+    <br /> <br />
+    <table id="tbEmployees" border="1" style="border-collapse:collapse">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</body>
+</html>

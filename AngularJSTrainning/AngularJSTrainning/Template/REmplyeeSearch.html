@@ -1,0 +1,19 @@
+﻿<h1> Employee Search</h1>
+<table border="1" style="border-collapse:collapse">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="emp in emplyeeSearchCtrl.employees">
+            <td>{{emp.Id}}</td>
+            <td>{{emp.Name}}</td>
+            <td>{{emp.Gender}}</td>
+            <td>{{emp.Salary}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,89 @@
+﻿<!--@@model EmployeeManagementCore.Models.Employee;-->
+@model HomeDetailsViewModel;
+<!--In order to use the layout page -->
+@{
+    ViewBag.Title = "Employee Details";
+    var photoPath = "~/images/" + (Model.Employee.PhotoPath ?? "q17.png");
+}
+<!--Razor html expression for ViewData
+<h3> @@ViewData["PageTitle"] </h3>    -->
+<!--Razor html expression for ViewBag
+<h3> @@ViewBag.PageTitle </h3> -->
+<!--Razor c# expression for ViewData
+@@{
+    var employee = ViewData["Employee"] as EmployeeManagementCore.Models.Employee;
+}
+<div>
+    Name: @@employee.Name
+</div>
+<div>
+    Name: @@employee.Email
+</div>
+<div>
+    Name: @@employee.Department
+</div>
+    -->
+<!--Razor c# expression for ViewBag
+
+<div>
+    Name: @@ViewBag.employee.Name
+</div>
+<div>
+    Name: @@ViewBag.employee.Email
+</div>
+<div>
+    Name: @@ViewBag.employee.Department
+</div>
+    -->
+<!--Razor c# expression for the Strongly View
+
+<div>
+    Name: @@Model.Name
+</div>
+<div>
+    Name: @@Model.Email
+</div>
+<div>
+    Name: @@Model.Department
+</div>
+    -->
+<!--Razor c# expression for the ViewModel
+<h3> @@Model.PageTitle </h3>
+<div>
+    Name: @@Model.Employee.Name
+</div>
+<div>
+    Name: @@Model.Employee.Email
+</div>
+<div>
+    Name: @@Model.Employee.Department
+</div>  -->
+
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Employee.Name</h1>
+            </div>
+            
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+
+                <h4>Employee ID : @Model.Employee.Id</h4>
+                <h4>Employee Email : @Model.Employee.Email</h4>
+                <h4>Employee Department : @Model.Employee.Department</h4>
+
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="home" asp-action="index" class="btn btn-primary">Back</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts {
+    <script src=""></script>
+
+}
